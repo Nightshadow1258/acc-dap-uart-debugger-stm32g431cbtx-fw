@@ -1,1 +1,0 @@
-add_subdirectory(CONFIG_AS5047P as5047p)

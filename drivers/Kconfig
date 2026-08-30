@@ -1,4 +1,0 @@
-# Custom sensor drivers configuration
-menu "Drivers"
-rsource "sensor/Kconfig"
-endmenu

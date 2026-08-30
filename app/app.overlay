@@ -1,0 +1,55 @@
+// / {
+//     chosen {
+//         zephyr,console = &cdc_acm_uart0;
+//         zephyr,shell-uart = &cdc_acm_uart0;
+//     };
+
+//     dap0: dap {
+//         compatible = "arm,cmsis-dap";
+//         status = "okay";
+//         clock-gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
+//         data-gpios  = <&gpiob 14 GPIO_ACTIVE_HIGH>;
+//         reset-gpios = <&gpiob 15 GPIO_ACTIVE_LOW>;
+//     };
+// };
+
+// &usart1 {
+//     status = "okay";
+//     current-speed = <115200>;
+//     pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
+//     pinctrl-names = "default";
+// };
+
+// /* Target &usb node for STM32F103 */
+// &usb {
+//     status = "okay";
+
+//     cdc_acm_uart0: cdc_acm_uart0 {
+//         compatible = "zephyr,cdc-acm-uart";
+//     };
+// };
+
+
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
+    };
+};
+
+&usart1 {
+    status = "okay";
+    current-speed = <115200>;
+    pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
+    pinctrl-names = "default";
+};
+
+&usbotg_fs {
+    status = "okay";
+    pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
+    pinctrl-names = "default";
+
+    cdc_acm_uart0: cdc_acm_uart0 {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
