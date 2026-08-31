@@ -35,6 +35,23 @@
         zephyr,console = &cdc_acm_uart0;
         zephyr,shell-uart = &cdc_acm_uart0;
     };
+
+    /* GPIO nodes for target SWD lines */
+    swd_pins {
+        compatible = "gpio-keys";
+        swclk_node: swclk {
+            gpios = <&gpiob 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+            label = "SWCLK";
+        };
+        swdio_node: swdio {
+            gpios = <&gpiob 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+            label = "SWDIO";
+        };
+        reset_node: reset {
+            gpios = <&gpiob 15 GPIO_ACTIVE_LOW>;
+            label = "NRST";
+        };
+    };
 };
 
 &usart1 {
