@@ -100,7 +100,7 @@ static void hw_uart_cb(const struct device *dev, void *user_data)
 int main(void)
 {
     int ret;
-
+ 
     if (!device_is_ready(usb_cdc_dev) || !device_is_ready(hw_uart_dev)) {
         LOG_ERR("UART or USB CDC devices not ready");
         return 0;
