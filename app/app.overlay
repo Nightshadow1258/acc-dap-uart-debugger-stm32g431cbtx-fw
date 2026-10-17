@@ -1,56 +1,32 @@
-// / {
-//     chosen {
-//         zephyr,console = &cdc_acm_uart0;
-//         zephyr,shell-uart = &cdc_acm_uart0;
-//     };
-
-//     dap0: dap {
-//         compatible = "arm,cmsis-dap";
-//         status = "okay";
-//         clock-gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
-//         data-gpios  = <&gpiob 14 GPIO_ACTIVE_HIGH>;
-//         reset-gpios = <&gpiob 15 GPIO_ACTIVE_LOW>;
-//     };
-// };
-
-// &usart1 {
-//     status = "okay";
-//     current-speed = <115200>;
-//     pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
-//     pinctrl-names = "default";
-// };
-
-// /* Target &usb node for STM32F103 */
-// &usb {
-//     status = "okay";
-
-//     cdc_acm_uart0: cdc_acm_uart0 {
-//         compatible = "zephyr,cdc-acm-uart";
-//     };
-// };
-
-
 / {
     chosen {
         zephyr,console = &cdc_acm_uart0;
         zephyr,shell-uart = &cdc_acm_uart0;
     };
+    leds { // Trick to make enumeration work by toggling the D+ pin
+        compatible = "gpio-leds";
+        usb_dp: usb_dp {
+            label = "USB D+ pin";
+            gpios = <&gpioa 12 GPIO_ACTIVE_HIGH>;
+        };
+    };
+    // dap0: dap {
+    //     compatible = "arm,cmsis-dap";
+    //     status = "okay";
+    //     clk-gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
+    //     dio-gpios  = <&gpiob 14 GPIO_PULL_UP>;
+    //     reset-gpios = <&gpiob 15 GPIO_ACTIVE_HIGH>;
+    //     port-write-cycles = <2>;
+    // };
 
-    /* GPIO nodes for target SWD lines */
-    swd_pins {
-        compatible = "gpio-keys";
-        swclk_node: swclk {
-            gpios = <&gpiob 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-            label = "SWCLK";
-        };
-        swdio_node: swdio {
-            gpios = <&gpiob 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-            label = "SWDIO";
-        };
-        reset_node: reset {
-            gpios = <&gpiob 15 GPIO_ACTIVE_LOW>;
-            label = "NRST";
-        };
+    dp0 {
+        compatible = "zephyr,swdp-gpio";
+//        compatible = "arm,cmsis-dap";
+        status = "okay";
+        clk-gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
+        dio-gpios  = <&gpiob 14 GPIO_PULL_UP>;
+        reset-gpios = <&gpiob 15 GPIO_ACTIVE_HIGH>;
+        port-write-cycles = <2>;
     };
 };
 
@@ -61,6 +37,8 @@
     pinctrl-names = "default";
 };
 
+
+
 &usbotg_fs {
     status = "okay";
     pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
@@ -70,3 +48,10 @@
         compatible = "zephyr,cdc-acm-uart";
     };
 };
+
+
+// zephyr_udc0: &usbotg_fs {
+//     status = "okay";
+//     pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
+//     pinctrl-names = "default";
+// };
