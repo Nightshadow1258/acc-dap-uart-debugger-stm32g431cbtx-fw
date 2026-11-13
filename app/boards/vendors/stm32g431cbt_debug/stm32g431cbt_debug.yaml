@@ -1,0 +1,15 @@
+identifier: stm32g431cbt_debug
+name: STM32G431CBT DEBUG
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+ram: 32
+flash: 128
+supported:
+  - gpio
+  - pwm
+  - counter
+  - i2c
+vendor: st

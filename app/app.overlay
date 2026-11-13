@@ -1,57 +1,80 @@
-/ {
-    chosen {
-        zephyr,console = &cdc_acm_uart0;
-        zephyr,shell-uart = &cdc_acm_uart0;
-    };
-    leds { // Trick to make enumeration work by toggling the D+ pin
-        compatible = "gpio-leds";
-        usb_dp: usb_dp {
-            label = "USB D+ pin";
-            gpios = <&gpioa 12 GPIO_ACTIVE_HIGH>;
-        };
-    };
-    // dap0: dap {
-    //     compatible = "arm,cmsis-dap";
-    //     status = "okay";
-    //     clk-gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
-    //     dio-gpios  = <&gpiob 14 GPIO_PULL_UP>;
-    //     reset-gpios = <&gpiob 15 GPIO_ACTIVE_HIGH>;
-    //     port-write-cycles = <2>;
-    // };
+// / {
+//     chosen {
+//         zephyr,console = &cdc_acm_uart0;
+//         zephyr,shell-uart = &cdc_acm_uart0;
+//     };
+//     // leds { // Trick to make enumeration work by toggling the D+ pin
+//     //     compatible = "gpio-leds";
+//     //     usb_dp: usb_dp {
+//     //         label = "USB D+ pin";
+//     //         gpios = <&gpioa 12 GPIO_ACTIVE_HIGH>;
+//     //     };
+//     // };
 
-    dp0 {
-        compatible = "zephyr,swdp-gpio";
-//        compatible = "arm,cmsis-dap";
-        status = "okay";
-        clk-gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
-        dio-gpios  = <&gpiob 14 GPIO_PULL_UP>;
-        reset-gpios = <&gpiob 15 GPIO_ACTIVE_HIGH>;
-        port-write-cycles = <2>;
-    };
-};
+//     dp0 {
+//         compatible = "zephyr,swdp-gpio";
+// //        compatible = "arm,cmsis-dap";
+//         status = "okay";
+//         clk-gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
+//         dio-gpios  = <&gpioa 4 GPIO_PULL_UP>;
+//         reset-gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>;
+//         port-write-cycles = <2>;
+//     };
 
-&usart1 {
-    status = "okay";
-    current-speed = <115200>;
-    pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
-    pinctrl-names = "default";
-};
+//     uart-bridge0 {
+//         compatible = "zephyr,uart-bridge";
+//         peers = <&cdc_acm_uart0 &usart2>;
+// 	};
+// };
 
-
-
-&usbotg_fs {
-    status = "okay";
-    pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
-    pinctrl-names = "default";
-
-    cdc_acm_uart0: cdc_acm_uart0 {
-        compatible = "zephyr,cdc-acm-uart";
-    };
-};
-
-
-// zephyr_udc0: &usbotg_fs {
+// &clk_hsi {
 //     status = "okay";
-//     pinctrl-0 = <&usb_otg_fs_dm_pa11 &usb_otg_fs_dp_pa12>;
+// };
+
+// &clk_hsi48 {
+//     status = "okay";
+// };
+
+// &pll {
+//     div-m = <4>;
+//     mul-n = <85>;
+//     div-p = <2>;
+//     div-q = <4>;
+//     div-r = <2>;
+//     clocks = <&clk_hsi>;
+//     status = "okay";
+// };
+
+// &rcc {
+//     clocks = <&pll>;
+//     clock-frequency = <DT_FREQ_M(170)>;
+//     ahb-prescaler = <1>;
+//     apb1-prescaler = <1>;
+//     apb2-prescaler = <1>;
+// };
+
+
+// &usart1 {
+//     status = "okay";
+//     current-speed = <115200>;
+//     pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
 //     pinctrl-names = "default";
+// };
+
+// &usart2 {
+//     status = "okay";
+//     current-speed = <115200>;
+//     pinctrl-0 = <&usart2_tx_pa2 &usart2_rx_pa3>;
+//     pinctrl-names = "default";
+// };
+
+
+// zephyr_udc0: &usb {
+//     status = "okay";
+//     pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
+//     pinctrl-names = "default";
+
+//     cdc_acm_uart0: cdc_acm_uart0 {
+//         compatible = "zephyr,cdc-acm-uart";
+//     };
 // };

@@ -1,0 +1,6 @@
+board:
+  name: stm32g431cbt_debug
+  full_name: STM32G431CBT DEBUG
+  vendor: st
+  socs:
+    - name: stm32g431xx
